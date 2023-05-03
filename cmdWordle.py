@@ -6,7 +6,7 @@ import os
 colorama.init(autoreset=True)
 os.system('cls')
 
-MAXTRIES = 5
+MAXTRIES = 6
 attempt = 0
 words = []
 with open("words.txt", 'r') as f:
@@ -15,7 +15,7 @@ with open("words.txt", 'r') as f:
 word = random.choice(words)
 guessList = []
 
-def print_colored_word(wordL, ans):
+def print_word(wordL, ans):
     for j, word in enumerate(wordL):
         print("   -----------")
         print(f"{j+1}. ", end="")
@@ -55,13 +55,14 @@ def get_guess():
 
 while attempt != MAXTRIES:
     guess = get_guess()
-    if guess == word:
-        print("You got it!")
-        break
     
     guessList.append(guess)
     os.system('cls')
-    print_colored_word(guessList, word)
+    print_word(guessList, word)
+
+    if guess == word:
+        print("You got it!")
+        break
 
     attempt += 1
 
