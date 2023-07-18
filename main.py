@@ -205,19 +205,20 @@ def createGame():
 def playCode():
     for i in root.winfo_children(): i.destroy()
     def play():
-        text = wordE.get().lower()
-        shift = -5
-        encrypted_text = ""
-        for char in text:
-            if char.isalpha():
-                if char.isupper():
-                    encrypted_char = chr((ord(char) - 65 + shift) % 26 + 65)
+        if len(wordE.get()) == 5:
+            text = wordE.get().lower()
+            shift = -5
+            encrypted_text = ""
+            for char in text:
+                if char.isalpha():
+                    if char.isupper():
+                        encrypted_char = chr((ord(char) - 65 + shift) % 26 + 65)
+                    else:
+                        encrypted_char = chr((ord(char) - 97 + shift) % 26 + 97)
                 else:
-                    encrypted_char = chr((ord(char) - 97 + shift) % 26 + 97)
-            else:
-                encrypted_char = char
-            encrypted_text += encrypted_char
-        playCW(encrypted_text)
+                    encrypted_char = char
+                encrypted_text += encrypted_char
+            playCW(encrypted_text)
 
 
     Label(root, text="Wordle", font=('arial', 35), bg=BG_C, fg="white").place(x=125, y=10)
