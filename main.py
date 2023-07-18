@@ -37,22 +37,35 @@ def playRW():
                         else: widget.destroy()
 
             frame = Frame(root, bg="white")
-            frame.place(x=10, y=80, width=380, height=325)
+            frame.place(x=10, y=70, width=380, height=355)
             if gameState == "W":
-                Label(frame, text="Your won! Congrats", font=('arial', 30)).place(x=10, y=5)
+                Label(frame, text="Your won! Congrats", font=('arial', 30), bg="white").place(x=10, y=5)
             elif gameState == "L":
-                Label(frame, text="You lost :(", font=('arial', 30)).place(x=100, y=5)
-            Label(frame, text=f"The word was: {word.upper()}", font=('arial', 25)).place(x=20, y=55)
+                Label(frame, text="You lost :(", font=('arial', 30), bg="white").place(x=100, y=5)
+            Label(frame, text=f"The word was: {word.upper()}", font=('arial', 25), bg="white").place(x=20, y=55)
 
-            Button(frame, text="Again", font=('arial', 25), command=playRW).place(x=10, y=200, width=150, height=45)
-            Button(frame, text="Main Menu", font=('arial', 20), command=mainScreen).place(x=220, y=200, width=150, height=45)
+            Button(frame, text="Again", font=('arial', 25), command=playRW).place(x=10, y=100, width=150, height=45)
+            Button(frame, text="Main Menu", font=('arial', 20), command=mainScreen).place(x=220, y=100, width=150, height=45)
+
+            sX, sY = 90, 155
+            sW, sH = 35, 35
+            for i in feedbackL:
+                for j in i:
+                    if j == "X": Label(frame, text=" ", font=('arial', 40, 'bold'), bg="#00ff00").place(x=sX+10, y=sY, width=sW, height=sH)
+                    elif j == "O": Label(frame, text=" ", font=('arial', 40, 'bold'), bg="#fff000").place(x=sX+10, y=sY, width=sW, height=sH)
+                    else: Label(frame, text=" ", font=('arial', 40, 'bold'), bg=BG_C, fg="white").place(x=sX+10, y=sY, width=sW, height=sH)
+                    sX += 40
+                sX = 90
+                sY += 40
 
         global MAXTRIES, attempt
+        feedbackL = []
         sX, sY = 65, 100
         sW, sH = 50, 50
 
         for i, guess in enumerate(guessL):
             feedback = wordStats(word, guess)
+            feedbackL.append(feedback)
             if feedback == "XXXXX":
                 gameState = "W"
                 winLoss(gameState)
@@ -78,6 +91,7 @@ def playRW():
             guess.delete(0, END)
         else:
             print("No")
+    def exit(e): mainScreen()
 
     global attempt
     attempt = 0
@@ -86,6 +100,9 @@ def playRW():
     word = getWord("words.txt")
     
     Label(root, text="Wordle", font=('arial', 35), bg=BG_C, fg="white").place(x=125, y=10)
+    a = Label(root, text="Exit", font=('arial', 15), bg=BG_C, fg="grey")
+    a.place(x=360, y=0)
+    a.bind('<Button-1>', exit)
 
     guess = Entry(root, font=('arial', 30), justify='center', bg='#525254', borderwidth=1)
     guess.place(x=15, y=435, height=50, width=370)
@@ -114,22 +131,35 @@ def playCW(word):
                         else: widget.destroy()
 
             frame = Frame(root, bg="white")
-            frame.place(x=10, y=80, width=380, height=325)
+            frame.place(x=10, y=70, width=380, height=355)
             if gameState == "W":
-                Label(frame, text="Your won! Congrats", font=('arial', 30)).place(x=10, y=5)
+                Label(frame, text="Your won! Congrats", font=('arial', 30), bg="white").place(x=10, y=5)
             elif gameState == "L":
-                Label(frame, text="You lost :(", font=('arial', 30)).place(x=100, y=5)
-            Label(frame, text=f"The word was: {word.upper()}", font=('arial', 25)).place(x=20, y=55)
+                Label(frame, text="You lost :(", font=('arial', 30), bg="white").place(x=100, y=5)
+            Label(frame, text=f"The word was: {word.upper()}", font=('arial', 25), bg="white").place(x=20, y=55)
 
-            Button(frame, text="Again", font=('arial', 25), command=playRW).place(x=10, y=200, width=150, height=45)
-            Button(frame, text="Main Menu", font=('arial', 20), command=mainScreen).place(x=220, y=200, width=150, height=45)
+            Button(frame, text="Again", font=('arial', 25), command=playCode).place(x=10, y=100, width=150, height=45)
+            Button(frame, text="Main Menu", font=('arial', 20), command=mainScreen).place(x=220, y=100, width=150, height=45)
+
+            sX, sY = 90, 155
+            sW, sH = 35, 35
+            for i in feedbackL:
+                for j in i:
+                    if j == "X": Label(frame, text=" ", font=('arial', 40, 'bold'), bg="#00ff00").place(x=sX+10, y=sY, width=sW, height=sH)
+                    elif j == "O": Label(frame, text=" ", font=('arial', 40, 'bold'), bg="#fff000").place(x=sX+10, y=sY, width=sW, height=sH)
+                    else: Label(frame, text=" ", font=('arial', 40, 'bold'), bg=BG_C, fg="white").place(x=sX+10, y=sY, width=sW, height=sH)
+                    sX += 40
+                sX = 90
+                sY += 40
 
         global MAXTRIES, attempt
+        feedbackL = []
         sX, sY = 65, 100
         sW, sH = 50, 50
 
         for i, guess in enumerate(guessL):
             feedback = wordStats(word, guess)
+            feedbackL.append(feedback)
             if feedback == "XXXXX":
                 gameState = "W"
                 winLoss(gameState)
@@ -155,6 +185,7 @@ def playCW(word):
             guess.delete(0, END)
         else:
             print("No")
+    def exit(e): mainScreen()
 
     global attempt
     attempt = 0
@@ -162,6 +193,9 @@ def playCW(word):
     gameState = "P"
     
     Label(root, text="Wordle", font=('arial', 35), bg=BG_C, fg="white").place(x=125, y=10)
+    a = Label(root, text="Exit", font=('arial', 15), bg=BG_C, fg="grey")
+    a.place(x=360, y=0)
+    a.bind('<Button-1>', exit)
 
     guess = Entry(root, font=('arial', 30), justify='center', bg='#525254', borderwidth=1)
     guess.place(x=15, y=435, height=50, width=370)
@@ -202,7 +236,6 @@ def createGame():
 
 
     Button(root, text="Back", font=('arial', 30), command=mainScreen).place(x=10, y=440, width=380, height=50)
-
 def playCode():
     for i in root.winfo_children(): i.destroy()
     def play():
@@ -239,8 +272,6 @@ def mainScreen():
     Button(root, text="Create", font=("Arial", 25), command=createGame).place(x=15, y=245, width=370, height=50)
     Button(root, text="Play with code", font=("Arial", 25), command=playCode).place(x=15, y=310, width=370, height=50)
 
-
 mainScreen()
 
 root.mainloop()
-
