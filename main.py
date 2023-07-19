@@ -1,5 +1,6 @@
 from tkinter import *
 import random
+import re
 
 BG_C = "#3b3b3b"
 MAXTRIES = 5
@@ -39,7 +40,7 @@ def playRW():
             frame = Frame(root, bg="white")
             frame.place(x=10, y=70, width=380, height=355)
             if gameState == "W":
-                Label(frame, text="Your won! Congrats", font=('arial', 30), bg="white").place(x=10, y=5)
+                Label(frame, text="You won! Congrats", font=('arial', 30), bg="white").place(x=10, y=5)
             elif gameState == "L":
                 Label(frame, text="You lost :(", font=('arial', 30), bg="white").place(x=100, y=5)
             Label(frame, text=f"The word was: {word.upper()}", font=('arial', 25), bg="white").place(x=20, y=55)
@@ -83,7 +84,7 @@ def playRW():
                 sX = 65
                 sY += 55
     def checkWord(e):
-        if len(guess.get()) == 5:
+        if len(guess.get()) == 5 and not re.search(r'[0-9\W]', guess.get()):
             global attempt
             attempt += 1
             guessL.append(guess.get().lower())
@@ -177,7 +178,7 @@ def playCW(word):
                 sX = 65
                 sY += 55
     def checkWord(e):
-        if len(guess.get()) == 5:
+        if len(guess.get()) == 5 and not re.search(r'[0-9\W]', guess.get()):
             global attempt
             attempt += 1
             guessL.append(guess.get().lower())
@@ -204,7 +205,7 @@ def playCW(word):
 def createGame():
     for i in root.winfo_children(): i.destroy()
     def createWord():
-        if len(wordE.get()) == 5:
+        if len(wordE.get()) == 5 and not re.search(r'[0-9\W]', wordE.get()):
             text = wordE.get().lower()
             shift = 5
             encrypted_text = ""
@@ -239,7 +240,7 @@ def createGame():
 def playCode():
     for i in root.winfo_children(): i.destroy()
     def play():
-        if len(wordE.get()) == 5:
+        if len(wordE.get()) == 5 and not re.search(r'[0-9\W]', wordE.get()):
             text = wordE.get().lower()
             shift = -5
             encrypted_text = ""
