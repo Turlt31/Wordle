@@ -207,19 +207,13 @@ def createGame():
     def createWord():
         if len(wordE.get()) == 5 and not re.search(r'[0-9\W]', wordE.get()):
             text = wordE.get().lower()
-            shift = 5
-            encrypted_text = ""
-            for char in text:
-                if char.isalpha():
-                    if char.isupper():
-                        encrypted_char = chr((ord(char) - 65 + shift) % 26 + 65)
-                    else:
-                        encrypted_char = chr((ord(char) - 97 + shift) % 26 + 97)
-                else:
-                    encrypted_char = char
-                encrypted_text += encrypted_char
+            text = text[:5].ljust(5)
+            rotation_key = 3
+            encrypted_chars = [chr(((ord(char) - 32 + rotation_key + i) % 95) + 32) for i, char in enumerate(text)]
+            encrypted_string = ''.join(encrypted_chars)
+
             outputE.delete(0, END)
-            outputE.insert(0, encrypted_text)
+            outputE.insert(0, encrypted_string)
 
 
 
@@ -240,20 +234,13 @@ def createGame():
 def playCode():
     for i in root.winfo_children(): i.destroy()
     def play():
-        if len(wordE.get()) == 5 and not re.search(r'[0-9\W]', wordE.get()):
+        if len(wordE.get()) == 5 and not re.search(r'[0-9]', wordE.get()):
             text = wordE.get().lower()
-            shift = -5
-            encrypted_text = ""
-            for char in text:
-                if char.isalpha():
-                    if char.isupper():
-                        encrypted_char = chr((ord(char) - 65 + shift) % 26 + 65)
-                    else:
-                        encrypted_char = chr((ord(char) - 97 + shift) % 26 + 97)
-                else:
-                    encrypted_char = char
-                encrypted_text += encrypted_char
-            playCW(encrypted_text)
+            text = text[:5].ljust(5)
+            rotation_key = 3
+            decrypted_chars = [ chr(((ord(char) - 32 - rotation_key - i) % 95) + 32) for i, char in enumerate(text) ]
+            decrypted_string = ''.join(decrypted_chars)
+            playCW(decrypted_string)
 
 
     Label(root, text="Wordle", font=('arial', 35), bg=BG_C, fg="white").place(x=125, y=10)
