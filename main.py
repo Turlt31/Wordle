@@ -6,17 +6,20 @@ BG_C = "#3b3b3b"
 MAXTRIES = 5
 
 attempt = 0
-keyboard = True
+keyboard = False
 greenL = []
 yellowL = []
 greyL = []
 
-
 root = Tk()
 root.title("Wordle")
 root.resizable(False, False)
-root.geometry("400x500")
 root.config(bg=BG_C)
+
+screenW = root.winfo_screenwidth()
+screenH = root.winfo_screenheight()
+
+root.geometry(f"400x500+{(screenW // 2) - (400 // 2)}+{(screenH // 2) - (500 // 2)}")
 
 def playRW():
     for i in root.winfo_children(): i.destroy()
@@ -135,7 +138,7 @@ def playRW():
     if keyboard:
         keyS = Toplevel(root)
         keyS.title("Keyboard")
-        keyS.geometry("550x200")
+        keyS.geometry("550x200+10+100")
         keyS.config(bg="#3b3b3b")
         keyS.resizable(False, False)
 
@@ -189,9 +192,9 @@ def playCW(word):
             sW, sH = 35, 35
             for i in feedbackL:
                 for j in i:
-                    if j == "X": Label(root, text=letter.upper(), font=('arial', 40, 'bold'), bg="#00ff00").place(x=sX+10, y=sY, width=sW, height=sH); greenL.append(letter.upper())
-                    elif j == "O": Label(root, text=letter.upper(), font=('arial', 40, 'bold'), bg="#fff000").place(x=sX+10, y=sY, width=sW, height=sH); yellowL.append(letter.upper())
-                    else: Label(root, text=letter.upper(), font=('arial', 40, 'bold'), bg=BG_C, fg="white").place(x=sX+10, y=sY, width=sW, height=sH); greyL.append(letter.upper())
+                    if j == "X": Label(frame, text=" ", font=('arial', 40, 'bold'), bg="#00ff00").place(x=sX+10, y=sY, width=sW, height=sH)
+                    elif j == "O": Label(frame, text=" ", font=('arial', 40, 'bold'), bg="#fff000").place(x=sX+10, y=sY, width=sW, height=sH)
+                    else: Label(frame, text=" ", font=('arial', 40, 'bold'), bg=BG_C, fg="white").place(x=sX+10, y=sY, width=sW, height=sH)
                     sX += 40
                 sX = 90
                 sY += 40
